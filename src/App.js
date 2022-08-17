@@ -3,12 +3,12 @@ import "./App.css";
 import SingleCard from "./components/SingleCard";
 
 const cardImages = [
-  { src: "/img/helmet-1.png" },
-  { src: "/img/potion-1.png" },
-  { src: "/img/ring-1.png" },
-  { src: "/img/scroll-1.png" },
-  { src: "/img/shield-1.png" },
-  { src: "/img/sword-1.png" },
+  { src: "/img/helmet-1.png", matched: false },
+  { src: "/img/potion-1.png", matched: false },
+  { src: "/img/ring-1.png", matched: false },
+  { src: "/img/scroll-1.png", matched: false },
+  { src: "/img/shield-1.png", matched: false },
+  { src: "/img/sword-1.png", matched: false },
 ];
 
 function App() {
@@ -44,7 +44,19 @@ function App() {
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       if (choiceOne.src === choiceTwo.src) {
-        console.log("match");
+        setCards((prevCards) => {
+          return prevCards.map((card) => {
+            if (card.src === choiceOne.src) {
+              return { ...card, matched: true };
+            } else {
+              return card;
+            }
+          });
+        });
+        //if choiceOne.src matches choiceTwo.src, then we have a match and we update card state
+        //take prevCard state to update state - need to return a new array of just matched cards
+        //take prevCard.map(), fire function for each card, return obj of what needs to be in new array
+        //spread card property and change matched to true
         resetTurn();
       } else {
         console.log("try again");
@@ -54,7 +66,7 @@ function App() {
   }, [choiceOne, choiceTwo]);
   //if choiceOne is updated, function runs, same with choiceTwo
   //but something only happens if both of them have values
-
+console.log(cards)
   //reset choices & increase a turn
   const resetTurn = () => {
     setChoiceOne(null);
