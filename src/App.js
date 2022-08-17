@@ -59,8 +59,7 @@ function App() {
         //spread card property and change matched to true
         resetTurn();
       } else {
-        console.log("try again");
-        resetTurn();
+        setTimeout(() => resetTurn(), 1000);
       }
     }
   }, [choiceOne, choiceTwo]);
@@ -81,7 +80,11 @@ console.log(cards)
 
       <div className="card-grid">
         {cards.map((card) => (
-          <SingleCard card={card} key={card.id} handleChoice={handleChoice} />
+          <SingleCard 
+          card={card} 
+          key={card.id} 
+          handleChoice={handleChoice} 
+          flipped={card === choiceOne || card === choiceTwo || card.matched}/>
         ))}
       </div>
     </div>
