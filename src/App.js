@@ -1,3 +1,4 @@
+import userEvent from "@testing-library/user-event";
 import { useEffect, useState } from "react";
 import "./App.css";
 import SingleCard from "./components/SingleCard";
@@ -26,6 +27,9 @@ function App() {
       //returns a shuffled array of card images
       .map((card) => ({ ...card, id: Math.random() }));
     //returns an object and adds an ID to each
+
+    setChoiceOne(null)
+    setChoiceTwo(null)
 
     setCards(shuffledCards);
     //updates cards state to shuffled cards
@@ -77,6 +81,11 @@ function App() {
     setDisabled(false)
   };
 
+  //start game automatically
+  useEffect(() => {
+    shuffleCards()
+  }, [])
+
   return (
     <div className="App">
       <h1>Magic Memory</h1>
@@ -93,6 +102,7 @@ function App() {
           />
         ))}
       </div>
+      <p>Turns: {turns}</p>
     </div>
   );
 }
