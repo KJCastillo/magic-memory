@@ -16,6 +16,7 @@ function App() {
   const [turns, setTurns] = useState(0);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
+  const [disabled, setDisabled] = useState(false);
 
   //shuffle cards
   const shuffleCards = () => {
@@ -43,6 +44,8 @@ function App() {
   //compare cards
   useEffect(() => {
     if (choiceOne && choiceTwo) {
+      setDisabled(true)
+      //disabled is true only after making two choices correctly
       if (choiceOne.src === choiceTwo.src) {
         setCards((prevCards) => {
           return prevCards.map((card) => {
@@ -65,12 +68,13 @@ function App() {
   }, [choiceOne, choiceTwo]);
   //if choiceOne is updated, function runs, same with choiceTwo
   //but something only happens if both of them have values
-console.log(cards)
+
   //reset choices & increase a turn
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
     setTurns((prevTurns) => prevTurns + 1);
+    setDisabled(false)
   };
 
   return (
@@ -84,7 +88,9 @@ console.log(cards)
           card={card} 
           key={card.id} 
           handleChoice={handleChoice} 
-          flipped={card === choiceOne || card === choiceTwo || card.matched}/>
+          flipped={card === choiceOne || card === choiceTwo || card.matched}
+          disabled={disabled}
+          />
         ))}
       </div>
     </div>
